@@ -26,6 +26,7 @@
             Driver = new TestHelper().Create(browserSelection);
             Driver.Navigate();
             Assert.IsTrue(true);
+            Driver.Close();
         }
 
     }
