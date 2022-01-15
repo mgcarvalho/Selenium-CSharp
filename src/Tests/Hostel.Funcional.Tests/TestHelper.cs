@@ -4,7 +4,6 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Remote;
 using System;
-using Xunit;
 
 namespace Hostel.Funcional.Tests
 {
