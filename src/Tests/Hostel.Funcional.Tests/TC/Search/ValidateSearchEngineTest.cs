@@ -4,17 +4,12 @@
     using OpenQA.Selenium;
     using Xunit;
 
-    [TestCaseOrderer("Search", "Engine")]
-    [Collection("Search")]
     public class ValidateSearchEngineTest
     {
         public IWebDriver Driver;
         const Browser browserSelection = Browser.Chrome;
         
         #region ctor
-        public ValidateSearchEngineTest()
-        { //Driver = new TestHelper().Create(browserSelection); 
-        }
         #endregion
 
         [Trait("TestCategory", "Sanity")]
