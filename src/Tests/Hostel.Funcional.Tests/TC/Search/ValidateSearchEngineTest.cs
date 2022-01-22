@@ -75,7 +75,7 @@
         [Trait("Priority", "Meddium")]
         [InlineData("13/13/2023", "14/15/2023", "1", "0")]
         [InlineData("01/01/2020", "02/01/2019", "1", "0")]
-        public void SearchValidation_Chrome_TrueData_Unsuccess(string checkIn, string checkOut, string adults, string children)
+        public void SearchValidation_Chrome_Unsuccess(string checkIn, string checkOut, string adults, string children)
         {
             try
             {
