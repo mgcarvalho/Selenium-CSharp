@@ -22,13 +22,14 @@
         private string childComboxPath = "/html/body/div[2]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[4]/div/div/div/form/p[5]/select";
         private string buttonSearchxPath = "/html/body/div[2]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[4]/div/div/div/form/p[6]/input";
         private string successResultTextxPath = "/html/body/div[2]/div/div/section/div/div/div/section[2]/div/div/div[1]/div/div/div/div/div/div/p";
+        private string failResultxPath = "/html/body/div[2]/div/div/section/div/div/div/section[2]/div/div/div[1]/div/div/div/div/div/div/div";
         #endregion
 
         [Theory]
         [Trait("TestCategory", "Functional")]
         [Trait("Application", "Mobile Hostel Friend")]
         [Trait("Priority", "Meddium")]
-        [InlineData("01/01/2023", "02/01/2023", "1", "0")]
+        [InlineData("22/01/2022", "23/01/2022", "1", "0")]
         [InlineData("01/01/2023", "01/01/2024", "10", "0")]
         [InlineData("01/01/2023", "02/01/2023", "1", "2")]
         [InlineData("01/01/2023", "02/01/2023", "1", "10")]
@@ -38,27 +39,23 @@
             {
                 //Arrange & Actions
                 Driver = TestHelper.Create(Browser.Chrome);
-                var quickTimeout = Driver.TimeoutWindow(20);
-                Driver.WaitSendKeysByXPath(quickTimeout, checkInInputxPath, checkIn);
-                Driver.WaitSendKeysByXPath(quickTimeout, checkOutInputxPath, checkOut);
+                var dTimeout = Driver.TimeoutWindow(20);
+                Driver.WaitSendKeysByXPath(dTimeout, checkInInputxPath, checkIn);
+                Driver.WaitSendKeysByXPath(dTimeout, checkOutInputxPath, checkOut);
 
-                //TODO: Create a helper (extensions) for combo boxes
-                var comboAdultBox = Driver.FindElement(By.XPath(adultsComboxPath));
-                new SelectElement(comboAdultBox).SelectByText(adults);
+                Driver.WaitSelectDropdownValueByXPath(dTimeout, adultsComboxPath, adults);
+                Driver.WaitSelectDropdownValueByXPath(dTimeout, childComboxPath, children);
 
-                var comboChildBox = Driver.FindElement(By.XPath(childComboxPath));
-                new SelectElement(comboChildBox).SelectByText(children);
-
-                Driver.WaitClickButtonByXPath(quickTimeout, buttonSearchxPath);
-                Driver.WaitByXPath(quickTimeout, successResultTextxPath);
+                Driver.WaitClickButtonByXPath(dTimeout, buttonSearchxPath);
+                Driver.WaitByXPath(dTimeout, successResultTextxPath);
                 var textResut = Driver.GetElementByXPath(successResultTextxPath).Text;
 
                 var cultureInfo = new CultureInfo("pt-PT");
                 var dateresultIn = DateTime.Parse(checkIn, cultureInfo);
                 var dateresultOut = DateTime.Parse(checkOut, cultureInfo);
 
-                var comparText = $"De {dateresultIn.ToString("d \\de MMMM, yyyy")} - à {dateresultOut.ToString("d \\de MMMM, yyyy")}";
                 //Asserts
+                var comparText = $"De {dateresultIn.ToString("d \\de MMMM, yyyy")} - à {dateresultOut.ToString("d \\de MMMM, yyyy")}";
                 Assert.Contains(comparText.ToUpper(), textResut.ToUpper());
             }
             catch(Exception ex)
@@ -76,29 +73,36 @@
         [Trait("TestCategory", "Functional")]
         [Trait("Application", "Mobile Hostel Friend")]
         [Trait("Priority", "Meddium")]
-        [InlineData("02/01/2023", "01/01/2023", "1", "0")]
-        [InlineData("01/01/2020", "02/01/2020", "1", "0")]
+        [InlineData("13/13/2023", "14/15/2023", "1", "0")]
+        [InlineData("01/01/2020", "02/01/2019", "1", "0")]
         public void SearchValidation_Chrome_TrueData_Unsuccess(string checkIn, string checkOut, string adults, string children)
         {
             try
             {
                 //Arrange & Actions
                 Driver = TestHelper.Create(Browser.Chrome);
-                var quickTimeout = Driver.TimeoutWindow(20);
-                Driver.WaitSendKeysByXPath(quickTimeout, checkInInputxPath, checkIn);
-                Driver.WaitSendKeysByXPath(quickTimeout, checkOutInputxPath, checkOut);
+                var dTimeout = Driver.TimeoutWindow(20);
+                
+                Driver.WaitSendKeysByXPath(dTimeout, checkInInputxPath, checkIn);
+                Driver.WaitSendKeysByXPath(dTimeout, checkOutInputxPath, checkOut);
 
-                //TODO: Create a helper (extensions) for combo boxes
-                var comboAdultBox = Driver.FindElement(By.XPath(adultsComboxPath));
-                new SelectElement(comboAdultBox).SelectByText(adults);
+                Driver.WaitSelectDropdownValueByXPath(dTimeout, adultsComboxPath, adults);
+                Driver.WaitSelectDropdownValueByXPath(dTimeout, childComboxPath, children);
 
                 var comboChildBox = Driver.FindElement(By.XPath(childComboxPath));
                 new SelectElement(comboChildBox).SelectByText(children);
 
-                Driver.WaitClickButtonByXPath(quickTimeout, buttonSearchxPath);
-                Driver.WaitByXPath(quickTimeout, successResultTextxPath);
+                Driver.WaitClickButtonByXPath(dTimeout, buttonSearchxPath);
+                Driver.WaitByXPath(dTimeout, failResultxPath);
+                var textResut = Driver.GetElementByXPath(failResultxPath).Text;
+
                 //Asserts
-                Assert.True(true);
+                var comparValido = "não é válido";
+                var comparCorreta = "não está correta";
+
+                //Asserts
+                Assert.Contains(comparValido.ToUpper(), textResut.ToUpper());
+                Assert.Contains(comparCorreta.ToUpper(), textResut.ToUpper());
             }
             catch (Exception ex)
             {
