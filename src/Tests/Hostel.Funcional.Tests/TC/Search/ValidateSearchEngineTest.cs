@@ -8,6 +8,7 @@
     using Hostel.Funcional.Tests.Helper;
     using System;
     using OpenQA.Selenium.Support.UI;
+    using System.Globalization;
 
     public class ValidateSearchEngineTest
     {
@@ -49,13 +50,16 @@
                 new SelectElement(comboChildBox).SelectByText(children);
 
                 Driver.WaitClickButtonByXPath(quickTimeout, buttonSearchxPath);
-
-                //TODO: catch the value of element
                 Driver.WaitByXPath(quickTimeout, successResultTextxPath);
-                //Regex with result
+                var textResut = Driver.GetElementByXPath(successResultTextxPath).Text;
 
+                var cultureInfo = new CultureInfo("pt-PT");
+                var dateresultIn = DateTime.Parse(checkIn, cultureInfo);
+                var dateresultOut = DateTime.Parse(checkOut, cultureInfo);
+
+                var comparText = $"De {dateresultIn.ToString("d \\de MMMM, yyyy")} - à {dateresultOut.ToString("d \\de MMMM, yyyy")}";
                 //Asserts
-                Assert.True(true);
+                Assert.Contains(comparText.ToUpper(), textResut.ToUpper());
             }
             catch(Exception ex)
             {
