@@ -5,16 +5,16 @@ using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Remote;
 using System;
 
-namespace Hostel.Funcional.Tests
+namespace Hostel.Funcional.Tests.Helper
 {
-    public class TestHelper
+    public static class TestHelper
     {
         #region Const
         public const int waitSeconds = 10;
         public const string principalURI = "https://www.mobilityfriendshostel.pt/";
         #endregion
 
-        public IWebDriver Create(Browser browserSelection = Browser.Chrome)
+        public static IWebDriver Create(Browser browserSelection = Browser.Chrome)
         {
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             //Will need to construct the remoteServerUri so it can be passed to the remoteWebDriver.
@@ -33,21 +33,22 @@ namespace Hostel.Funcional.Tests
                     //coptions.AddArguments("--remote - debugging - port = 4445");
                     _driver = new ChromeDriver(baseDirectory, coptions, timeout);
                     _driver.Url = principalURI;
+                    _driver.Navigate();
                     break;
 
                 case Browser.InternetExplorer:
                     _driver = new InternetExplorerDriver(baseDirectory, new InternetExplorerOptions());
                     _driver.Url = principalURI;
+                    _driver.Navigate();
+                    break;
+
+                case Browser.Edge:
+                    _driver = new InternetExplorerDriver(baseDirectory, new InternetExplorerOptions());
+                    _driver.Url = principalURI;
+                    _driver.Navigate();
                     break;
             }
 
-            //This method adds additional information to the desired capabilities, in this instance browser version and operating system.
-            //SetCapabilities(configuration.Platform, configuration.BrowserVersion);
-
-            //We then create a new RemoteWebDriver with the Uri created earlier and the desired capabilities object.
-            //This would then call your GRID instance and find a match and start the browser on the matching node.
-
-            //Return the driver to the calling class.
             return _driver;
         }
 
