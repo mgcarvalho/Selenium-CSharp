@@ -26,14 +26,12 @@
         #endregion
 
         [Theory]
-        [Trait("TestCategory", "Functional")]
-        [Trait("Application", "Mobile Hostel Friend")]
-        [Trait("Priority", "Meddium")]
+        [Trait("TestCategory", "TC1 Search")]
         [InlineData("22/01/2022", "23/01/2022", "1", "0")]
         [InlineData("01/01/2023", "01/01/2024", "10", "0")]
         [InlineData("01/01/2023", "02/01/2023", "1", "2")]
         [InlineData("01/01/2023", "02/01/2023", "1", "10")]
-        public void SearchValidation_Chrome_TrueData_Success(string checkIn, string checkOut, string adults, string children)
+        public void SearchValidation_TrueData_Success(string checkIn, string checkOut, string adults, string children)
         {
             try
             {
@@ -70,12 +68,10 @@
         }
 
         [Theory]
-        [Trait("TestCategory", "Functional")]
-        [Trait("Application", "Mobile Hostel Friend")]
-        [Trait("Priority", "Meddium")]
+        [Trait("TestCategory", "TC1 Search Fail")]
         [InlineData("13/13/2023", "14/15/2023", "1", "0")]
         [InlineData("01/01/2020", "02/01/2019", "1", "0")]
-        public void SearchValidation_Chrome_Unsuccess(string checkIn, string checkOut, string adults, string children)
+        public void SearchValidation_Unsuccess(string checkIn, string checkOut, string adults, string children)
         {
             try
             {
@@ -115,5 +111,14 @@
             }
         }
 
+        /*
+        [Fact]
+        public void TESTENAME_[UN/success]()
+        {
+            //Arrange
+            //Actions
+            //Assert
+        }
+        */
     }
 }

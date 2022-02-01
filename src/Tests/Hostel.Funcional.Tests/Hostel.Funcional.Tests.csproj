@@ -22,9 +22,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="TC\Booking\" />
-    <Folder Include="TC\Contacts\" />
-  </ItemGroup>
-
 </Project>

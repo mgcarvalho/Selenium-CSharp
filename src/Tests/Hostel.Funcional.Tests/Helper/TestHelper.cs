@@ -14,7 +14,7 @@ namespace Hostel.Funcional.Tests.Helper
         public const string principalURI = "https://www.mobilityfriendshostel.pt/";
         #endregion
 
-        public static IWebDriver Create(Browser browserSelection = Browser.Chrome)
+        public static IWebDriver Create(Browser browserSelection = Browser.Chrome, string URL = principalURI)
         {
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             //Will need to construct the remoteServerUri so it can be passed to the remoteWebDriver.
@@ -32,19 +32,19 @@ namespace Hostel.Funcional.Tests.Helper
                     coptions.AcceptInsecureCertificates = true;
                     //coptions.AddArguments("--remote - debugging - port = 4445");
                     _driver = new ChromeDriver(baseDirectory, coptions, timeout);
-                    _driver.Url = principalURI;
+                    _driver.Url = URL;
                     _driver.Navigate();
                     break;
 
                 case Browser.InternetExplorer:
                     _driver = new InternetExplorerDriver(baseDirectory, new InternetExplorerOptions());
-                    _driver.Url = principalURI;
+                    _driver.Url = URL;
                     _driver.Navigate();
                     break;
 
                 case Browser.Edge:
                     _driver = new InternetExplorerDriver(baseDirectory, new InternetExplorerOptions());
-                    _driver.Url = principalURI;
+                    _driver.Url = URL;
                     _driver.Navigate();
                     break;
             }
