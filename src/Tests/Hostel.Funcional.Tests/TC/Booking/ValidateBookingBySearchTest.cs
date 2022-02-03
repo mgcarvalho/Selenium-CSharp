@@ -22,6 +22,11 @@
         private string childComboxPath = "/html/body/div[2]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[4]/div/div/div/form/p[5]/select";
         private string buttonSearchxPath = "/html/body/div[2]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[4]/div/div/div/form/p[6]/input";
         private string successResultTextxPath = "/html/body/div[2]/div/div/section/div/div/div/section[2]/div/div/div[1]/div/div/div/div/div/div/p";
+        private string roomCheckInInputxPath = "/html/body/div[2]/div[1]/div/div[1]/div/section/div/div/div/section[9]/div/div/div/div/div/div[5]/div/div/div/form/p[2]/input[1]";
+        private string roomCheckOutInputxPath = "/html/body/div[2]/div[1]/div/div[1]/div/section/div/div/div/section[9]/div/div/div/div/div/div[5]/div/div/div/form/p[3]/input[1]";
+        private string roomButtonSearchxPath = "/html/body/div[2]/div[1]/div/div[1]/div/section/div/div/div/section[9]/div/div/div/div/div/div[5]/div/div/div/form/p[4]/input";
+        private string roomFailResultxPath = "/html/body/div[2]/div/div/section/div/div/div/section[2]/div/div/div[1]/div/div/div/div/div/div/div";
+        private string roomErrorResultTextxPath = "/html/body/div[2]/div[1]/div/div[1]/div/section/div/div/div/section[9]/div/div/div/div/div/div[5]/div/div/div/form/div[1]/p";
 
         [Theory]
         [Trait("TestCategory", "TC2 Booking")]
@@ -46,6 +51,41 @@
                 Driver.WaitByXPath(dTimeout, successResultTextxPath);
 
 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                //Close
+                Driver.Close();
+            }
+        }
+
+        [Theory]
+        [Trait("TestCategory", "TC3 Booking")]
+        [InlineData("01/01/2020", "01/02/2020")]
+        public void BookingValidation_TrueData_Unsuccess(string checkIn, string checkOut)
+        {
+            try
+            {
+                //Arrange & Actions
+                Driver = TestHelper.Create(Browser.Chrome);
+                var dTimeout = Driver.TimeoutWindow(20);
+
+                Driver.WaitSendKeysByXPath(dTimeout, roomCheckInInputxPath, checkIn);
+                Driver.WaitSendKeysByXPath(dTimeout, roomCheckOutInputxPath, checkOut);
+
+                Driver.WaitClickButtonByXPath(dTimeout, roomButtonSearchxPath);
+                Driver.WaitByXPath(dTimeout, roomErrorResultTextxPath);
+                var textResut = Driver.GetElementByXPath(roomErrorResultTextxPath).Text;
+
+                //Asserts
+                var notFound = "Nada encontrado. Por favor, tente novamente com parâmetros de pesquisa diferentes.";
+
+                //Asserts
+                Assert.Contains(notFound.ToUpper(), textResut.ToUpper());
             }
             catch (Exception ex)
             {
