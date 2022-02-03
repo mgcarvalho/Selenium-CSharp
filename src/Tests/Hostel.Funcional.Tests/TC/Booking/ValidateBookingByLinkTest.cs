@@ -10,52 +10,49 @@
     using OpenQA.Selenium.Support.UI;
     using System.Globalization;
 
-    public class ValidateSearchEngineTest
+    public class ValidateBookingByLinkTest
     {
         public IWebDriver Driver;
         const Browser browserSelection = Browser.Chrome;
+        const string URLContact = "https://www.mobilityfriendshostel.pt/rooms-and-suites/";
 
         //Search Page
-        private string checkInInputxPath = "/html/body/div[2]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[4]/div/div/div/form/p[2]/input";
-        private string checkOutInputxPath = "/html/body/div[2]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[4]/div/div/div/form/p[3]/input";
-        private string adultsComboxPath = "/html/body/div[2]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[4]/div/div/div/form/p[4]/select";
-        private string childComboxPath = "/html/body/div[2]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[4]/div/div/div/form/p[5]/select";
-        private string buttonSearchxPath = "/html/body/div[2]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[4]/div/div/div/form/p[6]/input";
-        private string successResultTextxPath = "/html/body/div[2]/div/div/section/div/div/div/section[2]/div/div/div[1]/div/div/div/div/div/div/p";
+        private string buttonSelectTypeRoom = "/html/body/div[2]/div/div/section/div/div/div/section[2]/div/div/div/div/div/div[4]/div/div/div/div[2]/div/div[2]/a";
         private string roomCheckInInputxPath = "/html/body/div[2]/div[1]/div/div[1]/div/section/div/div/div/section[9]/div/div/div/div/div/div[5]/div/div/div/form/p[2]/input[1]";
         private string roomCheckOutInputxPath = "/html/body/div[2]/div[1]/div/div[1]/div/section/div/div/div/section[9]/div/div/div/div/div/div[5]/div/div/div/form/p[3]/input[1]";
         private string roomButtonSearchxPath = "/html/body/div[2]/div[1]/div/div[1]/div/section/div/div/div/section[9]/div/div/div/div/div/div[5]/div/div/div/form/p[4]/input";
+        private string roomButtonConfirmxPath = "/html/body/div[2]/div[1]/div/div[1]/div/section/div/div/div/section[9]/div/div/div/div/div/div[5]/div/div/div/form/div[2]/input[2]";
         private string roomFailResultxPath = "/html/body/div[2]/div/div/section/div/div/div/section[2]/div/div/div[1]/div/div/div/div/div/div/div";
         private string roomErrorResultTextxPath = "/html/body/div[2]/div[1]/div/div[1]/div/section/div/div/div/section[9]/div/div/div/div/div/div[5]/div/div/div/form/div[1]/p";
+        private string roomAdultsComboxPath = "/html/body/div[2]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[4]/div/div/div/form/p[4]/select";
+        private string roomChildComboxPath = "/html/body/div[2]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[4]/div/div/div/form/p[5]/select";
+        private string roomButtonReservexPath = "/html/body/div[2]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[4]/div/div/div/form/p[6]/input";
 
         [Theory]
-        [Trait("TestCategory", "TC2 Booking")]
+        [Trait("TestCategory", "TC3 Booking Link")]
         [InlineData("10/01/2030", "15/01/2030", "1", "0")]
         [InlineData("10/01/2030", "15/01/2030", "1", "1")]
         [InlineData("10/01/2030", "15/01/2030", "1", "2")]
         [InlineData("10/01/2030", "15/01/2030", "1", "3")]
-        public void BookingValidation_TrueData_Success(string checkIn, string checkOut, string adults, string children)
+        public void BookingValidation_Success(string checkIn, string checkOut, string adults, string children)
         {
             try
             {
                 //Arrange & Actions
-                var notFoundFail = "Nenhuma acomodação encontrada";
-
-                Driver = TestHelper.Create(Browser.Chrome);
+                Driver = TestHelper.Create(browserSelection, URLContact);
                 var dTimeout = Driver.TimeoutWindow(20);
-                Driver.WaitSendKeysByXPath(dTimeout, checkInInputxPath, checkIn);
-                Driver.WaitSendKeysByXPath(dTimeout, checkOutInputxPath, checkOut);
 
-                Driver.WaitSelectDropdownValueByXPath(dTimeout, adultsComboxPath, adults);
-                Driver.WaitSelectDropdownValueByXPath(dTimeout, childComboxPath, children);
+                Driver.WaitClickButtonByXPath(dTimeout, buttonSelectTypeRoom);
 
-                Driver.WaitClickButtonByXPath(dTimeout, buttonSearchxPath);
-                Driver.WaitByXPath(dTimeout, successResultTextxPath);
+                Driver.WaitSendKeysByXPath(dTimeout, roomCheckInInputxPath, checkIn);
+                Driver.WaitSendKeysByXPath(dTimeout, roomCheckOutInputxPath, checkOut);
 
-                //Find?
-                var textResut = Driver.GetElementByXPath(roomErrorResultTextxPath).Text;
-                Assert.DoesNotContain(notFoundFail.ToUpper(), textResut.ToUpper());
-                //Continue with booking
+                Driver.WaitClickButtonByXPath(dTimeout, roomButtonSearchxPath);
+                Driver.WaitClickButtonByXPath(dTimeout, roomButtonConfirmxPath);
+
+                Driver.WaitSendKeysByXPath(dTimeout, roomAdultsComboxPath, adults);
+                Driver.WaitSendKeysByXPath(dTimeout, roomChildComboxPath, children);
+
 
                 //This part is not possible continue cos's site stop work!
 
@@ -73,15 +70,17 @@
         }
 
         [Theory]
-        [Trait("TestCategory", "TC2 Booking")]
+        [Trait("TestCategory", "TC3 Booking Link")]
         [InlineData("01/01/2020", "01/02/2020")]
-        public void BookingValidation_TrueData_Unsuccess(string checkIn, string checkOut)
+        public void BookingValidation_Unsuccess(string checkIn, string checkOut)
         {
             try
             {
                 //Arrange & Actions
-                Driver = TestHelper.Create(Browser.Chrome);
+                Driver = TestHelper.Create(browserSelection, URLContact);
                 var dTimeout = Driver.TimeoutWindow(20);
+
+                Driver.WaitClickButtonByXPath(dTimeout, buttonSelectTypeRoom);
 
                 Driver.WaitSendKeysByXPath(dTimeout, roomCheckInInputxPath, checkIn);
                 Driver.WaitSendKeysByXPath(dTimeout, roomCheckOutInputxPath, checkOut);
@@ -106,6 +105,5 @@
                 Driver.Close();
             }
         }
-
     }
 }

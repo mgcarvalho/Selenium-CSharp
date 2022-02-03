@@ -60,6 +60,12 @@
                 var dTimeout = Driver.TimeoutWindow(20);
 
                 Driver.WaitClickButtonByXPath(dTimeout, btnEnglishxPath);
+                Driver.WaitByXPath(dTimeout, titlexPath);
+                var textResut = Driver.GetElementByXPath(titlexPath).Text;
+
+                //Asserts
+                var comparText = "Fun & Relax";
+                Assert.Contains(comparText.ToUpper(), textResut.ToUpper());
             }
             catch (Exception ex)
             {
@@ -83,6 +89,12 @@
                 var dTimeout = Driver.TimeoutWindow(20);
 
                 Driver.WaitClickButtonByXPath(dTimeout, btnPortuguesexPath);
+                Driver.WaitByXPath(dTimeout, titlexPath);
+                var textResut = Driver.GetElementByXPath(titlexPath).Text;
+
+                //Asserts
+                var comparText = "Diversão & Relax";
+                Assert.Contains(comparText.ToUpper(), textResut.ToUpper());
             }
             catch (Exception ex)
             {

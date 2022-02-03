@@ -21,6 +21,7 @@
         private string messagexPath = "/html/body/div[2]/div/div/section/form/fieldset/textarea";
         private string captchaxPath = "/html/body/div[2]/div/div/section/form/fieldset/input[13]";
         private string sendButtonxPath = "/html/body/div[2]/div/div/section/form/fieldset/input[14]";
+        private string errorMessagexPath = "/html/body/div[3]/div/div/section/form/fieldset/label[8]";
         #endregion
 
         [Theory]
@@ -84,7 +85,7 @@
                 Driver.SendKeysByXPath(captchaxPath, captchaForm);
                 Driver.WaitClickButtonByXPath(dTimeout, sendButtonxPath);
 
-                var elem = Driver.FindElement(By.XPath(sendButtonxPath));
+                var elem = Driver.FindElement(By.XPath(errorMessagexPath));
                 //Asserts
                 Assert.True(elem.Exists());
             }
