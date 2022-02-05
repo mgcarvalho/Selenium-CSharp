@@ -17,11 +17,10 @@
         private string btnSpanhishxPath = "/html/body/header[2]/div[2]/nav/ul/li[7]/a/img";
         private string btnEnglishxPath = "/html/body/header[2]/div[2]/nav/ul/li[5]/a/img";
         private string btnPortuguesexPath = "/html/body/header[2]/div[2]/nav/ul/li[6]/a/img";
-        // private string titlexPath = "/html/body/div[3]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[2]/div/div/div/div/h1/span/font/font";
-        // private string titlexPath = "/html/body/div[2]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[2]/div/div/div/div/h1/span";
-        private string titlexPathPT = "/html/body/div[2]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[2]/div/div/div/div/h1/span|/html/body/div[3]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[2]/div/div/div/div/h1/span";
         private string titlexPathEN = "/html/body/div[3]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[2]/div/div/div/div/h1/span/font/font";
+        private string titlexPathPT = "/html/body/div[2]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[2]/div/div/div/div/h1/span";
         private string titlexPathES = "/html/body/div[3]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[2]/div/div/div/div/h1/span/font/font";
+
         #endregion
 
         [Fact]
