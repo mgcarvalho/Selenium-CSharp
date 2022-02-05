@@ -17,8 +17,10 @@
         private string btnSpanhishxPath = "/html/body/header[2]/div[2]/nav/ul/li[7]/a/img";
         private string btnEnglishxPath = "/html/body/header[2]/div[2]/nav/ul/li[5]/a/img";
         private string btnPortuguesexPath = "/html/body/header[2]/div[2]/nav/ul/li[6]/a/img";
-        // private string titlexPath = "/html/body/div[3]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[2]/div/div/div/div/h1/span/font/font";
-        private string titlexPath = "/html/body/div[2]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[2]/div/div/div/div/h1/span";
+        private string titlexPathEN = "/html/body/div[3]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[2]/div/div/div/div/h1/span/font/font";
+        private string titlexPathPT = "/html/body/div[2]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[2]/div/div/div/div/h1/span";
+        private string titlexPathES = "/html/body/div[3]/div/div/section/div/div/div/section[1]/div[2]/div/div/div/div/div[2]/div/div/div/div/h1/span/font/font";
+
         #endregion
 
         [Fact]
@@ -32,8 +34,8 @@
                 var dTimeout = Driver.TimeoutWindow(20);
 
                 Driver.WaitClickButtonByXPath(dTimeout, btnSpanhishxPath);
-                Driver.WaitByXPath(dTimeout, titlexPath);
-                var textResut = Driver.GetElementByXPath(titlexPath).Text;
+                Driver.WaitByXPath(dTimeout, titlexPathES);
+                var textResut = Driver.GetElementByXPath(titlexPathES).Text;
 
                 //Asserts
                 var comparText = "Diversión y Relajación";
@@ -61,8 +63,8 @@
                 var dTimeout = Driver.TimeoutWindow(20);
 
                 Driver.WaitClickButtonByXPath(dTimeout, btnEnglishxPath);
-                Driver.WaitByXPath(dTimeout, titlexPath);
-                var textResut = Driver.GetElementByXPath(titlexPath).Text;
+                Driver.WaitByXPath(dTimeout, titlexPathEN);
+                var textResut = Driver.GetElementByXPath(titlexPathEN).Text;
 
                 //Asserts
                 var comparText = "Fun & Relax";
@@ -90,8 +92,8 @@
                 var dTimeout = Driver.TimeoutWindow(20);
 
                 Driver.WaitClickButtonByXPath(dTimeout, btnPortuguesexPath);
-                Driver.WaitByXPath(dTimeout, titlexPath);
-                var textResut = Driver.GetElementByXPath(titlexPath).Text;
+                Driver.WaitByXPath(dTimeout, titlexPathPT);
+                var textResut = Driver.GetElementByXPath(titlexPathPT).Text;
 
                 //Asserts
                 var comparText = "Diversão & Relax";
