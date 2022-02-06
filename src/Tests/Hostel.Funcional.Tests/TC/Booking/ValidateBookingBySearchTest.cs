@@ -75,6 +75,7 @@
         [Theory]
         [Trait("TestCategory", "TC2 Booking")]
         [InlineData("01/01/2020", "01/02/2020")]
+        [InlineData("01/01/1900", "01/02/1900")]
         public void BookingValidation_TrueData_Unsuccess(string checkIn, string checkOut)
         {
             try
