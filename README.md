@@ -1,2 +1,2 @@
-# Selenium_TS
+# Selenium C#
 Trabalho Fianal de Teste de Software - Selenium
